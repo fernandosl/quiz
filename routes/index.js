@@ -2,6 +2,7 @@
 var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller');
+var commentController = require('../controllers/comment_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -10,7 +11,7 @@ res.render('index', { title: 'Quiz' , errors: []});
 
 /** GET credits page */
 router.get('/author', function(req, res) {
-	res.render('author', {});
+	res.render('author', { authorname: 'Fernando Sarsa', errors: []});
 });
 
 // Autoload de comandos con :quizId
@@ -25,5 +26,13 @@ router.post('/quizes/create',                   quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit',        quizController.edit);
 router.put('/quizes/:quizId(\\d+)',             quizController.update);
 router.delete('/quizes/:quizId(\\d+)',          quizController.destroy);
+//router.get('/author',                           quizController.author);
+
+// Definición de rutas de /comments
+router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
+router.post('/quizes/:quizId(\\d+)/comments',    commentController.create);
+/*router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', 
+	                                    sessionController.loginRequired, commentController.publish);
+*/
 
 module.exports = router;
